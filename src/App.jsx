@@ -25,6 +25,7 @@ const FinanceDashboard = () => {
   const [cryptoData, setCryptoData] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [darkMode, setDarkMode] = useState(false);
   const containerRef = useRef(null);
 
   const balanceHistory = [
@@ -262,6 +263,10 @@ const FinanceDashboard = () => {
     setTimeout(() => animateCounter(205500, setCurrentBalance), 1000);
   }, []);
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   const HeroCard = ({ title, value, icon, gradient, change, delay = 0 }) => (
     <div
       className="hero-card"
@@ -309,7 +314,7 @@ const FinanceDashboard = () => {
   );
 
   return (
-    <div className="dashboard" ref={containerRef}>
+    <div className={`dashboard ${darkMode ? "dark" : ""}`} ref={containerRef}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
@@ -332,6 +337,12 @@ const FinanceDashboard = () => {
           color: #1e293b;
           position: relative;
           overflow-x: hidden;
+          transition: all 0.3s ease;
+        }
+
+        .dashboard.dark {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: #f1f5f9;
         }
 
         .navbar {
@@ -345,6 +356,11 @@ const FinanceDashboard = () => {
           z-index: 1000;
           padding: 1rem 2rem;
           transition: all 0.3s ease;
+        }
+
+        .dashboard.dark .navbar {
+          background: rgba(15, 23, 42, 0.95);
+          border-bottom: 1px solid rgba(148, 163, 184, 0.2);
         }
 
         .nav-content {
@@ -362,6 +378,10 @@ const FinanceDashboard = () => {
           font-size: 1.5rem;
           font-weight: 800;
           color: #1e293b;
+        }
+
+        .dashboard.dark .logo {
+          color: #f1f5f9;
         }
 
         .logo-icon {
@@ -391,6 +411,10 @@ const FinanceDashboard = () => {
           transition: all 0.2s ease;
         }
 
+        .dashboard.dark .nav-link {
+          color: #94a3b8;
+        }
+
         .nav-link:hover {
           color: #6366f1;
           background: rgba(99, 102, 241, 0.1);
@@ -400,6 +424,37 @@ const FinanceDashboard = () => {
           display: flex;
           align-items: center;
           gap: 1rem;
+        }
+
+        .theme-toggle {
+          width: 40px;
+          height: 40px;
+          border: none;
+          background: #f1f5f9;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #64748b;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          font-size: 1rem;
+        }
+
+        .dashboard.dark .theme-toggle {
+          background: #334155;
+          color: #94a3b8;
+        }
+
+        .theme-toggle:hover {
+          background: #e2e8f0;
+          color: #6366f1;
+          transform: scale(1.05);
+        }
+
+        .dashboard.dark .theme-toggle:hover {
+          background: #475569;
+          color: #6366f1;
         }
 
         .notification-btn {
@@ -417,8 +472,18 @@ const FinanceDashboard = () => {
           transition: all 0.2s ease;
         }
 
+        .dashboard.dark .notification-btn {
+          background: #334155;
+          color: #94a3b8;
+        }
+
         .notification-btn:hover {
           background: #e2e8f0;
+          color: #6366f1;
+        }
+
+        .dashboard.dark .notification-btn:hover {
+          background: #475569;
           color: #6366f1;
         }
 
@@ -464,12 +529,20 @@ const FinanceDashboard = () => {
           gap: 4px;
         }
 
+        .dashboard.dark .mobile-menu-btn {
+          background: #334155;
+        }
+
         .hamburger-line {
           width: 20px;
           height: 2px;
           background: #64748b;
           transition: all 0.3s ease;
           border-radius: 1px;
+        }
+
+        .dashboard.dark .hamburger-line {
+          background: #94a3b8;
         }
 
         .hamburger-line.active:nth-child(1) {
@@ -496,6 +569,11 @@ const FinanceDashboard = () => {
           transition: transform 0.3s ease;
           z-index: 999;
           padding: 1rem 2rem;
+        }
+
+        .dashboard.dark .mobile-menu {
+          background: rgba(15, 23, 42, 0.98);
+          border-bottom: 1px solid rgba(148, 163, 184, 0.2);
         }
 
         .mobile-nav-links {
@@ -535,11 +613,21 @@ const FinanceDashboard = () => {
           margin-bottom: 1rem;
         }
 
+        .dashboard.dark .hero-title {
+          background: linear-gradient(135deg, #f1f5f9, #6366f1);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
         .hero-subtitle {
           font-size: 1.2rem;
           color: #64748b;
           max-width: 600px;
           margin: 0 auto;
+        }
+
+        .dashboard.dark .hero-subtitle {
+          color: #94a3b8;
         }
 
         .hero-grid {
@@ -557,6 +645,13 @@ const FinanceDashboard = () => {
           overflow: hidden;
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
           border: 1px solid rgba(148, 163, 184, 0.1);
+          transition: all 0.3s ease;
+        }
+
+        .dashboard.dark .hero-card {
+          background: #1e293b;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(148, 163, 184, 0.2);
         }
 
         .hero-card-bg {
@@ -594,6 +689,11 @@ const FinanceDashboard = () => {
           color: #6366f1;
         }
 
+        .dashboard.dark .hero-icon {
+          background: #334155;
+          border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
         .hero-change {
           padding: 6px 12px;
           border-radius: 20px;
@@ -622,11 +722,19 @@ const FinanceDashboard = () => {
           font-weight: 600;
         }
 
+        .dashboard.dark .hero-title {
+          color: #94a3b8;
+        }
+
         .hero-value {
           font-size: 2.5rem;
           font-weight: 800;
           color: #1e293b;
           margin-bottom: 1.5rem;
+        }
+
+        .dashboard.dark .hero-value {
+          color: #f1f5f9;
         }
 
         .hero-sparkline {
@@ -643,7 +751,6 @@ const FinanceDashboard = () => {
           opacity: 0.8;
         }
 
-        /* Footer */
         .footer {
           background: white;
           border-radius: 20px;
@@ -655,15 +762,32 @@ const FinanceDashboard = () => {
           text-align: center;
         }
 
+        .dashboard.dark .footer {
+          background: #1e293b;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
         .footer-content {
           color: #64748b;
           font-size: 0.9rem;
           line-height: 1.6;
         }
 
+        .dashboard.dark .footer-content {
+          color: #94a3b8;
+        }
+
         .footer-content strong {
           color: #1e293b;
           font-weight: 600;
+          background: linear-gradient(135deg, #6366f1, #8b5cf6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+
+        .dashboard.dark .footer-content strong {
+          color: #f1f5f9;
           background: linear-gradient(135deg, #6366f1, #8b5cf6);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -676,6 +800,13 @@ const FinanceDashboard = () => {
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
           border: 1px solid rgba(148, 163, 184, 0.1);
           margin-bottom: 2rem;
+          transition: all 0.3s ease;
+        }
+
+        .dashboard.dark .card {
+          background: #1e293b;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(148, 163, 184, 0.2);
         }
 
         .card-title {
@@ -686,6 +817,10 @@ const FinanceDashboard = () => {
           display: flex;
           align-items: center;
           gap: 12px;
+        }
+
+        .dashboard.dark .card-title {
+          color: #f1f5f9;
         }
 
         .card-icon {
@@ -721,6 +856,10 @@ const FinanceDashboard = () => {
           border-bottom: 1px solid #f1f5f9;
         }
 
+        .dashboard.dark .crypto-item {
+          border-bottom: 1px solid #334155;
+        }
+
         .crypto-item:last-child {
           border-bottom: none;
         }
@@ -747,9 +886,17 @@ const FinanceDashboard = () => {
           margin-bottom: 2px;
         }
 
+        .dashboard.dark .crypto-name {
+          color: #f1f5f9;
+        }
+
         .crypto-symbol {
           font-size: 0.8rem;
           color: #64748b;
+        }
+
+        .dashboard.dark .crypto-symbol {
+          color: #94a3b8;
         }
 
         .crypto-stats {
@@ -760,6 +907,10 @@ const FinanceDashboard = () => {
           font-weight: 700;
           color: #1e293b;
           margin-bottom: 2px;
+        }
+
+        .dashboard.dark .crypto-value {
+          color: #f1f5f9;
         }
 
         .crypto-change {
@@ -773,6 +924,10 @@ const FinanceDashboard = () => {
           gap: 1rem;
           padding: 1rem 0;
           border-bottom: 1px solid #f1f5f9;
+        }
+
+        .dashboard.dark .transaction-item {
+          border-bottom: 1px solid #334155;
         }
 
         .transaction-item:last-child {
@@ -808,9 +963,17 @@ const FinanceDashboard = () => {
           margin-bottom: 2px;
         }
 
+        .dashboard.dark .transaction-description {
+          color: #f1f5f9;
+        }
+
         .transaction-date {
           font-size: 0.8rem;
           color: #64748b;
+        }
+
+        .dashboard.dark .transaction-date {
+          color: #94a3b8;
         }
 
         .transaction-amount {
@@ -832,6 +995,10 @@ const FinanceDashboard = () => {
           justify-content: space-between;
           padding: 1rem 0;
           border-bottom: 1px solid #f1f5f9;
+        }
+
+        .dashboard.dark .expense-item {
+          border-bottom: 1px solid #334155;
         }
 
         .expense-item:last-child {
@@ -861,9 +1028,17 @@ const FinanceDashboard = () => {
           margin-bottom: 2px;
         }
 
+        .dashboard.dark .expense-info h4 {
+          color: #f1f5f9;
+        }
+
         .expense-info span {
           font-size: 0.8rem;
           color: #64748b;
+        }
+
+        .dashboard.dark .expense-info span {
+          color: #94a3b8;
         }
 
         .expense-right {
@@ -876,18 +1051,24 @@ const FinanceDashboard = () => {
           margin-bottom: 2px;
         }
 
+        .dashboard.dark .expense-amount {
+          color: #f1f5f9;
+        }
+
         .expense-percentage {
           font-size: 0.8rem;
           color: #64748b;
+        }
+
+        .dashboard.dark .expense-percentage {
+          color: #94a3b8;
         }
 
         @media (max-width: 1024px) {
           .dashboard-grid {
             grid-template-columns: 1fr;
           }
-        }
 
-        @media (max-width: 768px) {
           .nav-links {
             display: none;
           }
@@ -895,9 +1076,24 @@ const FinanceDashboard = () => {
           .mobile-menu-btn {
             display: flex;
           }
+        }
 
+        @media (max-width: 768px) {
           .main-content {
             padding: 1rem;
+            margin-top: 70px;
+          }
+
+          .navbar {
+            padding: 1rem;
+          }
+
+          .nav-content {
+            gap: 1rem;
+          }
+
+          .user-menu {
+            gap: 0.5rem;
           }
 
           .hero-title {
@@ -906,6 +1102,7 @@ const FinanceDashboard = () => {
 
           .hero-subtitle {
             font-size: 1rem;
+            padding: 0 1rem;
           }
 
           .hero-grid {
@@ -928,19 +1125,44 @@ const FinanceDashboard = () => {
           .hero-value {
             font-size: 2rem;
           }
+
+          .card-title {
+            font-size: 1.1rem;
+          }
+
+          .crypto-item, .transaction-item, .expense-item {
+            padding: 0.75rem 0;
+          }
+
+          .crypto-icon, .transaction-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 0.9rem;
+          }
+
+          .expense-icon {
+            width: 35px;
+            height: 35px;
+            font-size: 0.8rem;
+          }
         }
 
         @media (max-width: 480px) {
-          .navbar {
-            padding: 1rem;
-          }
-
           .main-content {
             padding: 0.5rem;
+            margin-top: 65px;
+          }
+
+          .navbar {
+            padding: 0.75rem;
           }
 
           .hero-title {
             font-size: 2rem;
+          }
+
+          .hero-subtitle {
+            font-size: 0.9rem;
           }
 
           .card, .hero-card {
@@ -949,6 +1171,55 @@ const FinanceDashboard = () => {
 
           .hero-value {
             font-size: 1.8rem;
+          }
+
+          .hero-header {
+            margin-bottom: 2rem;
+          }
+
+          .hero-grid {
+            gap: 1rem;
+          }
+
+          .logo {
+            font-size: 1.3rem;
+          }
+
+          .logo-icon {
+            width: 35px;
+            height: 35px;
+            font-size: 1rem;
+          }
+
+          .theme-toggle, .notification-btn, .user-avatar, .mobile-menu-btn {
+            width: 35px;
+            height: 35px;
+            font-size: 0.9rem;
+          }
+        }
+
+        @media (max-width: 360px) {
+          .hero-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+
+          .hero-card {
+            padding: 1rem;
+          }
+
+          .hero-value {
+            font-size: 1.6rem;
+          }
+
+          .card {
+            padding: 1rem;
+            margin-bottom: 1rem;
+          }
+
+          .card-title {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
           }
         }
 
@@ -1012,6 +1283,9 @@ const FinanceDashboard = () => {
           </div>
 
           <div className="user-menu">
+            <button className="theme-toggle" onClick={toggleDarkMode}>
+              <i className={darkMode ? "fas fa-sun" : "fas fa-moon"}></i>
+            </button>
             <button className="notification-btn">
               <i className="fas fa-bell"></i>
               <span className="notification-badge">3</span>
@@ -1122,16 +1396,26 @@ const FinanceDashboard = () => {
                       />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                  <XAxis dataKey="month" stroke="#64748b" fontSize={12} />
-                  <YAxis stroke="#64748b" fontSize={12} />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke={darkMode ? "#334155" : "#e2e8f0"}
+                  />
+                  <XAxis
+                    dataKey="month"
+                    stroke={darkMode ? "#94a3b8" : "#64748b"}
+                    fontSize={12}
+                  />
+                  <YAxis
+                    stroke={darkMode ? "#94a3b8" : "#64748b"}
+                    fontSize={12}
+                  />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "white",
-                      border: "1px solid #e2e8f0",
+                      backgroundColor: darkMode ? "#1e293b" : "white",
+                      border: `1px solid ${darkMode ? "#334155" : "#e2e8f0"}`,
                       borderRadius: "12px",
                       boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-                      color: "#1e293b",
+                      color: darkMode ? "#f1f5f9" : "#1e293b",
                     }}
                   />
                   <Area
@@ -1156,7 +1440,7 @@ const FinanceDashboard = () => {
                   style={{
                     marginLeft: "auto",
                     fontSize: "0.7rem",
-                    color: "#64748b",
+                    color: darkMode ? "#94a3b8" : "#64748b",
                     display: "flex",
                     alignItems: "center",
                     gap: "5px",
@@ -1273,10 +1557,10 @@ const FinanceDashboard = () => {
                   </Pie>
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "white",
-                      border: "1px solid #e2e8f0",
+                      backgroundColor: darkMode ? "#1e293b" : "white",
+                      border: `1px solid ${darkMode ? "#334155" : "#e2e8f0"}`,
                       borderRadius: "8px",
-                      color: "#1e293b",
+                      color: darkMode ? "#f1f5f9" : "#1e293b",
                     }}
                   />
                 </PieChart>
@@ -1320,16 +1604,26 @@ const FinanceDashboard = () => {
             </div>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={balanceHistory}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="month" stroke="#64748b" fontSize={12} />
-                <YAxis stroke="#64748b" fontSize={12} />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke={darkMode ? "#334155" : "#e2e8f0"}
+                />
+                <XAxis
+                  dataKey="month"
+                  stroke={darkMode ? "#94a3b8" : "#64748b"}
+                  fontSize={12}
+                />
+                <YAxis
+                  stroke={darkMode ? "#94a3b8" : "#64748b"}
+                  fontSize={12}
+                />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "white",
-                    border: "1px solid #e2e8f0",
+                    backgroundColor: darkMode ? "#1e293b" : "white",
+                    border: `1px solid ${darkMode ? "#334155" : "#e2e8f0"}`,
                     borderRadius: "12px",
                     boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
-                    color: "#1e293b",
+                    color: darkMode ? "#f1f5f9" : "#1e293b",
                   }}
                 />
                 <Bar dataKey="income" fill="#10b981" radius={[4, 4, 0, 0]} />
@@ -1338,7 +1632,6 @@ const FinanceDashboard = () => {
             </ResponsiveContainer>
           </Card>
 
-          {/* Footer */}
           <div className="footer">
             <div className="footer-content">
               <p className="footer-copyright">
